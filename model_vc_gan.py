@@ -122,23 +122,12 @@ class Encoder(nn.Module):
                          dilation=1, w_init_gain='relu'),
                 nn.BatchNorm1d(512))
             convolutions.append(conv_layer)
-        '''for i in range(3):
-            conv_layer = nn.Sequential(
-                ConvNorm(80+dim_emb if i==0 else 512,
-                         512,
-                         kernel_size=5, stride=1,
-                         padding=2,
-                         dilation=1, w_init_gain='relu'),
-                nn.BatchNorm1d(512))
-            convolutions.append(conv_layer)'''
         self.convolutions = nn.ModuleList(convolutions)
         
         self.lstm = nn.LSTM(512, dim_neck, 2, batch_first=True, bidirectional=True)
 
     def forward(self, x):
         x = x.squeeze(1).transpose(2,1)
-        #c_org = c_org.unsqueeze(-1).expand(-1, -1, x.size(-1))
-        #x = torch.cat((x, c_org), dim=1)
         
         for conv in self.convolutions:
             x = F.relu(conv(x))
@@ -280,19 +269,8 @@ class Generator(nn.Module):
                 c_org, _, _ = self.repar(c_org)#
             c_trg, _, _ = self.repar(c_trg)
         encoder_outputs = torch.cat((code_exp, c_trg.unsqueeze(1).expand(-1,x.size(1),-1)), dim=-1)
-        #print(encoder_outputs.shape) # B*L*256
-        #assert 0
+        
         mel_outputs = self.decoder(encoder_outputs)
-        #print(mel_outputs.shape)#torch.Size([2, 128, 80])
-        '''mel_logvars = self.linear_logvar(mel_outputs)
-        mel_normout = torch.stack((mel_outputs, mel_logvars), dim = 1)
-        #print(mel_normout.shape)#torch.Size([2, 2, 128, 80])
-        outputs = NormalDecoder(mel_normout)
-
-        if eps is None:
-            mel_outputs = outputs.sample().squeeze(1)
-        else:
-            mel_outputs = outputs.sample(eps_x=eps).squeeze(1)'''
                 
         mel_outputs_postnet = self.postnet(mel_outputs.transpose(2,1))
         mel_outputs_postnet = mel_outputs + mel_outputs_postnet.transpose(2,1)
@@ -313,27 +291,10 @@ class Generator(nn.Module):
             tmp.append(code.unsqueeze(1).expand(-1,int(x.size(1)/len(codes)),-1))
         code_exp = torch.cat(tmp, dim=1)
         
-        '''if self.repar is not None:
-            if a is not None:
-                a, _, _ = self.repar(a)#
-            b, _, _ = self.repar(b)
-        c_trg = a + (b-a)*alpha'''
         c_trg = a + (b-a)*alpha
         c_trg, _, _ = self.repar(c_trg)
         encoder_outputs = torch.cat((code_exp, c_trg.unsqueeze(1).expand(-1,x.size(1),-1)), dim=-1)
-        #print(encoder_outputs.shape) # B*L*256
-        #assert 0
         mel_outputs = self.decoder(encoder_outputs)
-        #print(mel_outputs.shape)#torch.Size([2, 128, 80])
-        '''mel_logvars = self.linear_logvar(mel_outputs)
-        mel_normout = torch.stack((mel_outputs, mel_logvars), dim = 1)
-        #print(mel_normout.shape)#torch.Size([2, 2, 128, 80])
-        outputs = NormalDecoder(mel_normout)
-
-        if eps is None:
-            mel_outputs = outputs.sample().squeeze(1)
-        else:
-            mel_outputs = outputs.sample(eps_x=eps).squeeze(1)'''
                 
         mel_outputs_postnet = self.postnet(mel_outputs.transpose(2,1))
         mel_outputs_postnet = mel_outputs + mel_outputs_postnet.transpose(2,1)
