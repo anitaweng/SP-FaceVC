@@ -36,6 +36,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=2, help='mini-batch size')
     parser.add_argument('--num_iters', type=int, default=3000000, help='number of total iterations')
     parser.add_argument('--len_crop', type=int, default=128, help='dataloader output sequence length')
+    parser.add_argument('--model_id', type=str, default='spfacevc', help='model name')
     parser.add_argument('--no_repar', action="store_true", help='have repararmeterization or not')
     parser.add_argument('--no_attn', action="store_true", help='have attention or not')
     parser.add_argument('--no_dis', action="store_true", help='have discriminator or not')
