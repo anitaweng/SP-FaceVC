@@ -6,13 +6,9 @@ import datetime
 import os
 from tensorboardX import SummaryWriter 
 from pathlib import Path 
-import pytorch_ssim
-from model_bl import D_VECTOR
 from collections import OrderedDict
 from collections import namedtuple
 import random
-#from augment import *
-from pytorch_metric_learning.losses import NTXentLoss, CrossBatchMemory
 from Dis_noncond import MultiDiscriminator
 from torch.autograd import Variable
 import io
@@ -280,7 +276,6 @@ class Solver(object):
                 plt.title('origin')
                 librosa.display.specshow(np.transpose(x_real[0].detach().squeeze().cpu().numpy(), (-1,-2)), x_axis='time', y_axis='mel', sr=22050)
                 plt.colorbar(format='%f')
-                #plt.savefig(os.path.join(output_dir,'convert_'+ name + '.png'))
                 plt.close()
                 self.writer.add_figure('origin', fig, i+1)
 
@@ -288,7 +283,6 @@ class Solver(object):
                 plt.title('reconstruct')
                 librosa.display.specshow(np.transpose(x_identic_psnt[0].detach().squeeze().cpu().numpy(), (-1,-2)), x_axis='time', y_axis='mel', sr=22050)
                 plt.colorbar(format='%f')
-                #plt.savefig(os.path.join(output_dir,'convert_'+ name + '.png'))
                 plt.close()
                 self.writer.add_figure('reconstruct', fig, i+1)
 
@@ -296,7 +290,6 @@ class Solver(object):
                 plt.title('convert')
                 librosa.display.specshow(np.transpose(x_identic_psntb[0].detach().squeeze().cpu().numpy(), (-1,-2)), x_axis='time', y_axis='mel', sr=22050)
                 plt.colorbar(format='%f')
-                #plt.savefig(os.path.join(output_dir,'convert_'+ name + '.png'))
                 plt.close()
                 self.writer.add_figure('convert', figb, i+1)
             
