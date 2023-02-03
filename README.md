@@ -4,7 +4,7 @@ This is the offcial github page of the AAAI 2023 proceeding paper: "**Zero-shot 
 
 The demo website: [https://sites.google.com/view/spfacevc-demo](https://sites.google.com/view/spfacevc-demo)
 
-1. Generate data with ***preprocess/preprocess.py***.
+1. Set up and generate data with ***mel2amp.py*** in [WAVEGLOW](https://github.com/NVIDIA/waveglow). Change the file to ours.
 2. Set up a new environment and change the directory path to your own path in ***data_loader.py***.
 3. Train the model with command:
 ```
