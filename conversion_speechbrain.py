@@ -7,10 +7,13 @@ from model_vc_gan import Generator
 from pathlib import Path 
 from scipy.fft import idctn, dctn
 
+########### parameters here ###############
 dir = 'spfacevc'
 no_repar = False
 no_attn = False
 face_dir = '/data/faceemb_lrs3_mtcnn_margin50_500_mean/'
+mel_dir = '/home/310505006/data/lrs3_22feature_500/mel/'
+#############################################################
 
 def pad_seq(x, base=32):
     len_out = int(base * ceil(float(x.shape[0])/base))
@@ -40,7 +43,6 @@ G.load_state_dict(g_checkpoint)
 
 spect_vc = []
 #############################  LRS3  #################################
-mel_dir = '/home/310505006/data/lrs3_22feature_500/mel/'
 src_speaker_lst = ["0wpCZxiAQzw", "FD5ZKiSmoMU", "1gdKrtwBGqY", "pcNxS2i7SvQ", "11Mq9ZuxZMc", "F2hc2FLOdhI", "oXSyMUeAEec", "Yo5cKRmJaf0", "weyd0UMdP7g", "LKAhTELkOV8", "2L4BSVpvx1A", "xbagFzcyNiM", "6Af6bSwyiwI", "MgUTzbGakRw", "EZwxKPv1CwA", "5duz42kHqPs"]
 tgt_speaker_lst = ["0wpCZxiAQzw", "FD5ZKiSmoMU", "1gdKrtwBGqY", "pcNxS2i7SvQ", "11Mq9ZuxZMc", "F2hc2FLOdhI", "oXSyMUeAEec", "Yo5cKRmJaf0", "weyd0UMdP7g", "LKAhTELkOV8", "2L4BSVpvx1A", "xbagFzcyNiM", "6Af6bSwyiwI", "MgUTzbGakRw", "EZwxKPv1CwA", "5duz42kHqPs"]
 
