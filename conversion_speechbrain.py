@@ -12,7 +12,7 @@ dir = 'spfacevc'
 no_repar = False
 no_attn = False
 face_dir = '/data/faceemb_lrs3_mtcnn_margin50_500_mean/'
-mel_dir = '/home/310505006/data/lrs3_22feature_500/mel/'
+mel_dir = '/data/lrs3_22feature_500/mel/'
 #############################################################
 
 def pad_seq(x, base=32):
