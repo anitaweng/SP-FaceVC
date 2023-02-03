@@ -1,0 +1,14 @@
+_name: 'Make indexes Config (default)'
+
+input_path: '/home/310505006/data/lrs3_22feature_500/mel/'
+output_path: '/home/310505006/data/lrs3_22index_500/'
+
+indexer_name: lrs3
+
+split_all:
+    train: 450 #450 #4579 #80
+    dev: 50 #50 #510 #29
+
+split_train:
+    train: 20 #100
+    dev: 5 #10
