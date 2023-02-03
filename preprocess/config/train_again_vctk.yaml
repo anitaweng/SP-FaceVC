@@ -1,0 +1,70 @@
+_name: 'againvc_vctk'
+
+writer: wandb
+ckpt_dir: /disk/AGAIN-VC/checkpoints/again
+flag: vctk_l1
+
+dataset:
+    dataset_name: 'vctk'
+    feat_path: /disk/data/VCTK-Corpus/vctk_22feature/
+    feat:
+        - 'mel'
+    indexes_path: /disk/data/VCTK-Corpus/vctk_22index/indexes.pkl
+    seglen: 128
+    pitch_path: /disk/data/VCTK-Corpus/vctk_22pitch/
+    pitchlen : 147
+    ap_path : /disk/data/VCTK-Corpus/vctk_ap/
+    face_path: 
+
+dataloader:
+    train:
+        batch_size: 32 #2 #32
+        shuffle: True
+    dev:
+        batch_size: 64 #2 #64
+
+build:
+    model_name: warp_teacher
+    model:
+        params: 
+            encoder_params:
+                c_in: 80
+                c_h: 256
+                c_out: 4
+                n_conv_blocks: 6 #6
+                subsample: [1, 1, 1, 1, 1, 1]
+                #head: 1
+            decoder_params:
+                c_in: 4
+                c_h: 256
+                c_out: 80
+                n_conv_blocks: 6 #6
+                upsample: [1, 1, 1, 1, 1, 1]
+                #head: 1
+            activation_params: 
+                act: sigmoid
+                params:
+                    alpha: 0.1
+            pitch_params:
+                num_layers: 2
+                batch_first: True
+                dropout: 0.3
+                input_size: 1
+                hidden_size: 2 #4
+                bidirectional: True
+            warp_params:
+                in_dim: 512
+                out_dim: 256
+                mapping_layers: 7
+                lastout_dim: 4
+
+    optimizer:
+        params:
+            lr: 0.0005 #0.0005
+            betas:
+                - 0.9
+                - 0.999
+            amsgrad: True
+            weight_decay: 0.0001 #0.0001
+        grad_norm: 3
+        criteria: l1
