@@ -9,16 +9,16 @@ The demo website: [https://sites.google.com/view/spfacevc-demo](https://sites.go
 ```
 python3 preprocess/preprocess.py
 ```
-2. Change ```rootDir``` and ```targetDir``` in ```make_faceemb.py```, and execute to get face embedding with command:
+2. Change ```rootDir``` and ```targetDir``` in ```make_faceemb.py```, and execute to get face embedding.
+Then, do the arithmatic mean for the embeddings (change your input and output dir path as well) with commands:
 ```
 python3 make_faceemb.py
 ```
-Then, doing arithmatic mean for the embeddings. (Change your input and output dir path as well)
 ```
 python3 make_spk_mean.py
 ```
 3. Change the directory path to your own path in ```data_loader.py```.
-4. Train the model with command:
+4. Train the model until the loss function is converged with command:
 ```
 python3 main_gan.py --model_id $your_id$
 ```
