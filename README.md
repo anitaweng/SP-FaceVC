@@ -1,4 +1,4 @@
-# SPFaceVC
+# SP-FaceVC
 
 This is the offcial github page of the AAAI 2023 proceeding paper: "**Zero-shot Face-based Voice Conversion: Bottleneck-Free Speech Disentanglement in the Real-world Scenario**".
 
